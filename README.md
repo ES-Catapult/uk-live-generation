@@ -8,7 +8,7 @@ This project provides an open-source data pipeline for extracting live and histo
 <br>
 All BMRS data is queried using the Elexon Data Portal package (https://github.com/OSUKED/ElexonDataPortal).
 <br>
-In order to provide location data alongside the generation data, locations of wind farms have been mapped using the data available from the "Power Station Dictionary" GitHub repository (https://github.com/OSUKED/Power-Station-Dictionary).
+In order to provide location data alongside the generation data, locations of generators have been mapped using the data available from the "Power Station Dictionary" GitHub repository (https://github.com/OSUKED/Power-Station-Dictionary).
 <br>
 <br>
 
@@ -16,7 +16,7 @@ In order to provide location data alongside the generation data, locations of wi
 
 By design, this data pipeline will only capture data about electricity generators which are sending data to the BMRMs, namely larger generators which export into the UK's transmission network. This means that a lot of smaller generators (e.g. small onshore wind farms) and embedded generation (e.g. rooftop solar) will not be included in this dataset. Likewise, electricity flow via interconnectors has not been included in this pipeline.
 <br>
-As part of this project, we performed considerable reconciliation between the historic (B1610) and the physical BMRS data to understand the limitations of the proposed approach. This highlighted the following limitations:
+As part of this project, we performed considerable reconciliation between the historic (B1610) and the physical BMRS data to understand the limitations of the proposed approach. This highlighted the following discrepancies:
 * For intermittent generation, such as wind, FPNs are a lot less accurate as they rely on forecasts. The data quality of submitted FPNs varies considerably for different wind farms, with some generators simply submitting FPNs that match their installed capacity.
 * Sheffield Solar, in collaboration with ESO, do publish live estimates of generation, based on a combination of live metering from domestic and small/medium solar farms, and live weather data of solar radiation round the country. This data is not currently integrated in the live-generation map.
 
