@@ -20,6 +20,13 @@ As part of this project, we performed considerable reconciliation between the hi
 * For intermittent generation, such as wind, FPNs are a lot less accurate as they rely on forecasts. The data quality of submitted FPNs varies considerably for different wind farms, with some generators simply submitting FPNs that match their installed capacity.
 * Sheffield Solar, in collaboration with ESO, do publish live estimates of generation, based on a combination of live metering from domestic and small/medium solar farms, and live weather data of solar radiation round the country. This data is not currently integrated in the live-generation map.
 
+## How  to use this repo
+The data pipeline in this repo was designed and developed to highlight how other open-source projects in the energy sector could easily be leveraged to speed up the development of new insights. To generate the "live generation" dataset, please clone this repo and then run the
+1. "PSD_dataprep" notebook to extract the latest data from the Power Station dictionary
+2. "Data_Pipeline" notebook to query the BMRS API to extract the latest historic and live generation data.
+The pipeline will output a dataset in CSV format which can be used to easily analyse where electricity is being generated when. The code was developed so that it could be rerun on a half-hourly basis if required. An example of a visualisation that could be generated with this data can be found here: <href>https://public.tableau.com/app/profile/jessica.steinemann/viz/LiveGenerationMapUK/Dashboard1</href>. We'd love to hear back from the community if you found any other interesting use cases with this data! Likewise, if you have any queries about the logic behind this code, please don't hesitate to reach out - when developing this project, we found that the lack of documentation about the BMRS data posed a challenge to our data design and development. Hence, we'd happily share our learnings with those interested to build on this project. <br>
+Work to automate the running of this pipeline is currently ongoing, so please  come back soon to follow the progress with this project!
+
 ## Future Development Ideas
 1. Replace FPNs for wind farms with worst forecast performance with an improved wind forecast.
 2. Integrate data from Sheffield Solar.
