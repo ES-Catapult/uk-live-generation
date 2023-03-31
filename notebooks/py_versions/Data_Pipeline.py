@@ -66,10 +66,13 @@ df_PHYBMDATA = plfns.setup_update_PHYBM_data(
 # Abbreviations (https://www.bmreports.com/bmrs/?q=help/glossary): <br>
 # * **FPN**: Final Physical Notification - "A Physical Notification is the best estimate of the level of generation or demand that a participant in the BM expects a BM Unit to export or import, respectively, in a Settlement Period."
 # * **BOAL(F)**: Bid Offer Acceptance Level - subsequent "last minute" changes to this notified generation, e.g. due to curtailment or due to balancing demands. "A Bid-Offer Acceptance is a formalised representation of the purchase and/or sale of Offers and/or Bids (see Bid-Offer Data below) by the System Operator in its operation of the Balancing Mechanism."
-# * **MEL**: Maximum Export Level - It is the maximum power export level of a particular BM Unit at a particular time. It is submitted as a series of point MW values and associated times.
+# * **MEL**: Maximum Export Level - It is the maximum power export level of a particular BM Unit at a particular time. It is submitted as a series of point MW values and associated times. <br><br>
+# The actions to turn the BM data into long format and resolve it to minutely level will only be performed on the latest BM data to reduce the processing time and compute required. The rest of the BM data will be read from the previous version of the output dataset, i.e. anything between the BM_Start_date and 90min from the end date of the previous version of the "Generation_Combined.csv" output.
 
 # %%
-df_fpn, df_mel, df_boal = plfns.filter_and_rename_physical_Data(df_PHYBMDATA)
+df_generation, df_fpn, df_mel, df_boal = plfns.filter_and_rename_physical_Data(
+    location_BMRS_Final, df_B1610, df_PHYBMDATA
+)
 
 # %% [markdown]
 # The half-hourly or sub-half-hourly data is resampled to minutely resolution so that actions that happen at different times during each half-hour period can be joined together.
@@ -124,7 +127,7 @@ df_fpn_mel_boal_agg = df_fpn_mel_boal_agg[
 df_B1610["quantity"] = df_B1610["quantity"].astype("float")
 
 # %%
-df_generation = pd.concat((df_B1610, df_fpn_mel_boal_agg), axis=0)
+df_generation = pd.concat((df_B1610, df_generation, df_fpn_mel_boal_agg), axis=0)
 df_generation = df_generation[
     df_generation["quantity"] > 0
 ].copy()  # Filter out BM data with a negative value (not a generator) or a value of 0 (B1610 only has positive values)
